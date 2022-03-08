@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "purviewAccountname": {
+            "type": "string",
+            "defaultValue": "POC-AzurePurview-NonProfit"
+          },
+        "azureRegion":{
+            "type": "string",
+            "allowedValues": [
+                "eastus",
+                "westeurope", 
+                "southeastasia",
+                "canadacentral",
+                "southcentralus",
+                "brazilsouth",
+                "centralindia",
+                "uksouth",
+                "francecentral",
+                "koreacentral",
+                "uaenorth",
+                "japaneast",
+                "australiaeast",
+                "northeurope",
+                "westcentralus",
+                "eastus2"
+            ],
+            "metadata": {
+                "description": "The list of locations that can be specified when deploying resources",
+                "strongType": "location",
+                "displayName": "Allowed locations"
+            },
+            "defaultValue": "eastus"
+        }      
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Purview/accounts",
+            "apiVersion": "2021-07-01",
+            "name": "[parameters('purviewAccountname')]",
+            "location": "[parameters('azureRegion')]",
+            "sku": {
+                "name": "Standard",
+                "capacity": 1
+            },
+            "dependsOn": [],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "cloudConnectors": {},
+                "publicNetworkAccess": "Enabled"
+            }
+        }
+    ]
+}
